@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Student Management System</title>
+    <!-- Favicon & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2>Administrator Login</h2>
+                <p>Enter your credentials to access the Student Management Portal</p>
+            </div>
+
+            <!-- Pre-filled hint for easy testing by professor/examiner -->
+            <div style="background-color: var(--primary-subtle); border: 1px dashed var(--primary-border); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--primary-dark);">
+                <i class="fas fa-info-circle"></i> <strong>Default Credentials:</strong><br>
+                Username: <code>admin</code> &bull; Password: <code>admin123</code>
+            </div>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="username">Username <span class="required">*</span></label>
+                    <div style="position: relative;">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="e.g. admin" value="admin" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="password">Password <span class="required">*</span></label>
+                    <div style="position: relative;">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" value="admin123" required>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.88rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-muted);">
+                        <input type="checkbox" checked style="accent-color: var(--primary);"> Remember session
+                    </label>
+                    <a href="index.html" style="font-size: 0.85rem;">Back to Home</a>
+                </div>
+
+                <button type="submit" id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 0.95rem;">
+                    Sign In to Dashboard <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted);">
+                College Mini Project &bull; Java Programming Subject
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

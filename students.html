@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students | Student Management System</title>
+    <!-- Icons & Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>EduManage</h2>
+                    <span>Java Mini Project</span>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-label">Main Navigation</li>
+                <li>
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="students.html" class="sidebar-link active">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Manage Students</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-student.html" class="sidebar-link">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+
+                <li class="menu-label">Administration</li>
+                <li>
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="handleLogout()" class="sidebar-link" style="color: var(--danger);">
+                        <i class="fas fa-sign-out-alt" style="color: var(--danger);"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-snippet">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name" id="topbarUserName">Administrator</div>
+                        <div class="user-role" id="topbarUserRole">Admin Panel</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="toggle-sidebar-btn" id="sidebarToggleBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1>Student Records</h1>
+                        <p>Search, filter, edit, view, and manage registered students</p>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="btn btn-outline btn-sm" title="Lock Records" onclick="relockStudentsView()">
+                        <i class="fas fa-lock"></i> Lock Records
+                    </button>
+                    <a href="add-student.html" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> New Student
+                    </a>
+                    <button class="btn-icon" title="Reload List" onclick="loadStudents()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <!-- Locked State Banner (active until PIN 7337 is entered) -->
+                <div id="studentsLockedOverlay" class="locked-overlay" style="display: none;">
+                    <div class="lock-avatar">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+                        Protected Student Directory
+                    </h3>
+                    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">
+                        Access to student records is password protected. Please enter the security password (<strong>7337</strong>) to unlock and view records.
+                    </p>
+                    <button class="btn btn-primary" onclick="openSecurityPinModal('students.html')">
+                        <i class="fas fa-key"></i> Enter Password (7337)
+                    </button>
+                </div>
+
+                <div id="studentsCardContent">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-users" style="color: var(--primary);"></i>
+                            <h3>All Enrolled Students</h3>
+                            <span class="badge badge-dept" id="studentTableCount">Loading...</span>
+                        </div>
+                        <a href="add-student.html" class="btn btn-outline btn-sm">
+                            <i class="fas fa-user-plus"></i> Add Student
+                        </a>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Search and Filter Bar -->
+                        <div class="table-toolbar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="studentSearchInput" placeholder="Search by Student ID, Name, Register No...">
+                            </div>
+
+                            <div class="filter-group">
+                                <select id="deptFilter" class="filter-select">
+                                    <option value="All">All Departments</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                    <option value="Electronics & Comm.">Electronics & Comm.</option>
+                                    <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                </select>
+
+                                <select id="yearFilter" class="filter-select">
+                                    <option value="All">All Years</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="All">All Statuses</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="Graduated">Graduated</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Student Data Table -->
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Student Details</th>
+                                        <th>Register No</th>
+                                        <th>Department / Year</th>
+                                        <th>Contact Info</th>
+                                        <th>Gender</th>
+                                        <th>Status</th>
+                                        <th style="text-align: center;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <!-- Rows populated dynamically by script.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div> <!-- /studentsCardContent -->
+            </main>
+        </div>
+    </div>
+
+    <!-- VIEW STUDENT MODAL -->
+    <div class="modal-backdrop" id="viewModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3><i class="fas fa-id-card" style="color: var(--primary); margin-right: 8px;"></i> Student Profile Details</h3>
+                <button class="modal-close" onclick="closeModal('viewModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="viewModalBody">
+                <!-- Injected via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('viewModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT STUDENT MODAL -->
+    <div class="modal-backdrop" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-edit" style="color: var(--warning); margin-right: 8px;"></i> Edit Student Information</h3>
+                <button class="modal-close" onclick="closeModal('editModal')">&times;</button>
+            </div>
+            <form id="editStudentForm" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="editDbId" name="editDbId">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editStudentId">Student ID <span class="required">*</span></label>
+                            <input type="text" id="editStudentId" name="editStudentId" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editName">Full Name <span class="required">*</span></label>
+                            <input type="text" id="editName" name="editName" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editRegisterNo">Register Number <span class="required">*</span></label>
+                            <input type="text" id="editRegisterNo" name="editRegisterNo" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editDob">Date of Birth</label>
+                            <input type="date" id="editDob" name="editDob" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGender">Gender</label>
+                            <select id="editGender" name="editGender" class="form-control">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editDepartment">Department</label>
+                            <select id="editDepartment" name="editDepartment" class="form-control" required>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics & Comm.">Electronics & Comm.</option>
+                                <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Civil">Civil</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editYear">Academic Year</label>
+                            <select id="editYear" name="editYear" class="form-control" required>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editStatus">Status</label>
+                            <select id="editStatus" name="editStatus" class="form-control">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Graduated">Graduated</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editEmail">Email Address <span class="required">*</span></label>
+                            <input type="email" id="editEmail" name="editEmail" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPhone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="editPhone" name="editPhone" class="form-control" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="editAddress">Address</label>
+                            <textarea id="editAddress" name="editAddress" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal-dialog" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle" style="color: var(--danger); margin-right: 8px;"></i> Confirm Deletion</h3>
+                <button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 2rem 1.5rem;">
+                <div style="width: 60px; height: 60px; border-radius: var(--radius-full); background: var(--danger-bg); color: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem auto;">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <h4 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-main);">Delete Student Record?</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    Are you sure you want to permanently delete <strong id="deleteStudentName" style="color: var(--text-main);">this student</strong>?
+                    This action will execute a <code>DELETE</code> query on the MySQL database and cannot be undone.
+                </p>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn" onclick="executeDeleteStudent()">
+                    <i class="fas fa-trash-alt"></i> Delete Record
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+</html>
+

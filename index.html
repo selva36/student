@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System | Java Mini Project</title>
+    <!-- Favicon & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="topbar" style="position: relative; z-index: 10;">
+        <div class="topbar-left">
+            <div class="brand-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="brand-text">
+                <h2>EduManage</h2>
+                <span>Student Management System</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <a href="login.html" class="btn btn-outline btn-sm">
+                <i class="fas fa-lock"></i> Admin Login
+            </a>
+            <a href="dashboard.html" class="btn btn-primary btn-sm">
+                <i class="fas fa-th-large"></i> Live Dashboard
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-badge">
+            <i class="fas fa-code"></i> Java Programming Mini Project &bull; Java Servlets + JDBC + MySQL
+        </div>
+        <h1 class="hero-title">
+            Modern & Robust <br>
+            <span>Student Management System</span>
+        </h1>
+        <p class="hero-desc">
+            An end-to-end web application developed for college administration. Features real-time CRUD operations,
+            secure JDBC database transactions, intuitive search & filter, and responsive modern dashboards.
+        </p>
+        <div class="hero-buttons">
+            <a href="dashboard.html" class="btn btn-primary" style="padding: 0.85rem 1.8rem; font-size: 1rem;">
+                <i class="fas fa-arrow-right"></i> Enter Admin Portal
+            </a>
+            <a href="add-student.html" class="btn btn-secondary" style="padding: 0.85rem 1.8rem; font-size: 1rem;">
+                <i class="fas fa-user-plus"></i> Register Student
+            </a>
+        </div>
+    </section>
+
+    <!-- Key Highlights / Architecture -->
+    <div class="feature-grid">
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-database"></i>
+            </div>
+            <h4>JDBC & MySQL Backend</h4>
+            <p>Employs <code>PreparedStatement</code> to safely execute INSERT, SELECT, UPDATE, and DELETE queries, preventing SQL Injection vulnerabilities.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-sitemap"></i>
+            </div>
+            <h4>Java OOP & MVC Architecture</h4>
+            <p>Strictly structured with Model classes (Inheritance with <code>Person</code> & <code>Student</code>), DAO Abstraction, and Servlet Controllers.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Admin Authentication</h4>
+            <p>Session-based authentication allowing authorized administrators to manage records, oversee departments, and monitor key statistics.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h4>Live Search & Multi-Filters</h4>
+            <p>Instant search by Student ID, Student Name, or Register Number, paired with department and academic year multi-filtering.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h4>Real-time Analytics</h4>
+            <p>Visual statistics for total students, active students, department enrollment distribution, and recently registered students.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h4>Responsive Blue & White UI</h4>
+            <p>Designed using modern CSS3 flexbox and grid, beautiful rounded controls, status badges, toast notifications, and modal dialogs.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: auto; text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); background: #ffffff;">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+            <strong>Student Management System</strong> &bull; Java Programming Mini Project &bull; Academic Submission
+        </p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+
